@@ -14,6 +14,5 @@ public:
     void Initalise();
     void display();
     int grid[20][10];
-    std::vector<Color> GetCellColors();
     void draw();
 };

@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include "grid.h"
+#include "blocks.cpp"
 
 int main()
 {
@@ -10,9 +11,8 @@ int main()
 
     Grid grid = Grid();
     // grid.display();
-    grid.grid[0][0] = 6;
-    grid.grid[1][0] = 6;
-    grid.grid[2][0] = 6;
+    
+    ZBlock block = ZBlock();
 
     while (WindowShouldClose() == false)
     {
@@ -20,7 +20,7 @@ int main()
 
         ClearBackground(darkBlue);
         grid.draw();
-
+        block.Draw();
         EndDrawing();
     }
 
