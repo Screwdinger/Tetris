@@ -34,6 +34,15 @@ void Grid::display()
     }
 }
 
+bool Grid::IsCellOutside(int row, int column)
+{
+    if(row >= 0 && row < numsRows && column >= 0 && column < numsCols)
+    {
+        return false;
+    }
+    return true;
+}
+
 /*
 Syntax to draw a rectangle:
                 void DrawRectangle(int posX, int posY, width, height, colour)

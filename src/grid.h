@@ -13,6 +13,7 @@ public:
     Grid();
     void Initalise();
     void display();
+    bool IsCellOutside(int row, int column);
     int grid[20][10];
     void draw();
 };
