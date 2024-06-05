@@ -8,6 +8,7 @@ class Game
     Block currentBlock;
     Block previousBlock;
     bool IsBlockOutside();
+    void RotateBlock();
 
     public:
     Game();

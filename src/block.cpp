@@ -18,6 +18,24 @@ void Block::Draw()
     }                                                                                                         //(0, 1), (1, 1), (2, 1), (3, 1)
 }
 
+void Block::Rotate()
+{
+    rotationState++;
+    if(rotationState == (int)cells.size())
+    {
+        rotationState = 0;
+    }
+}
+
+void Block::UndoRotate()
+{
+    rotationState--;
+    if(rotationState == -1)
+    {
+        rotationState = cells.size() - 1;
+    }
+}
+
 void Block::Move(int rows, int columns)
 {
     rowOffset += rows;
