@@ -6,12 +6,16 @@ class Game
 {
     std::vector<Block> blocks;
     Block currentBlock;
-    Block previousBlock;
+    Block nextBlock;
     bool IsBlockOutside();
+    bool BlockFits();
     void RotateBlock();
+    void LockBlock();
+    void Reset();
 
     public:
     Game();
+    bool gameOver;
     Block GetRandomBlock();
     std::vector<Block> GetAllBlocks();
     void Draw();

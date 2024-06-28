@@ -14,13 +14,53 @@ bool Game::IsBlockOutside()
     return false;
 }
 
+bool Game::BlockFits()
+{
+    std::vector<Position> tiles = currentBlock.GetCellPositions();
+    for (Position item : tiles)
+    {
+        if (grid.IsCellEmpty(item.row, item.column) == false)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void Game::RotateBlock()
 {
-    currentBlock.Rotate();
-    if(IsBlockOutside())
+    if (!gameOver)
     {
-        currentBlock.UndoRotate();
+        currentBlock.Rotate();
+        if (IsBlockOutside() || BlockFits() == false)
+        {
+            currentBlock.UndoRotate();
+        }
     }
+}
+
+void Game::LockBlock()
+{
+    std::vector<Position> tiles = currentBlock.GetCellPositions();
+    for (Position item : tiles)
+    {
+        grid.grid[item.row][item.column] = currentBlock.id;
+    }
+    currentBlock = nextBlock;
+    if (BlockFits() == false)
+    {
+        gameOver = true;
+    }
+    nextBlock = GetRandomBlock();
+    grid.ClearFullRows();
+}
+
+void Game::Reset()
+{
+    grid.Initalise();
+    blocks = GetAllBlocks();
+    currentBlock = GetRandomBlock();
+    nextBlock = GetRandomBlock();
 }
 
 Game::Game()
@@ -28,7 +68,8 @@ Game::Game()
     grid = Grid();
     blocks = GetAllBlocks();
     currentBlock = GetRandomBlock();
-    previousBlock = GetRandomBlock();
+    nextBlock = GetRandomBlock();
+    gameOver = false;
 }
 
 // Function to select a block randomly
@@ -66,6 +107,12 @@ void Game::HandleInput()
 {
     int keyPressed = GetKeyPressed();
 
+    if(gameOver && keyPressed != 0)
+    {
+        gameOver = false;
+        Reset();
+    }
+
     switch (keyPressed)
     {
     case KEY_LEFT:
@@ -85,27 +132,37 @@ void Game::HandleInput()
 
 void Game::MoveBlockLeft()
 {
-    currentBlock.Move(0, -1);
-    if (IsBlockOutside())
+    if (!gameOver)
     {
-        currentBlock.Move(0, 1);
+        currentBlock.Move(0, -1);
+        if (IsBlockOutside() || BlockFits() == false)
+        {
+            currentBlock.Move(0, 1);
+        }
     }
 }
 
 void Game::MoveBlockRight()
 {
-    currentBlock.Move(0, 1);
-    if (IsBlockOutside())
+    if (!gameOver)
     {
-        currentBlock.Move(0, -1);
+        currentBlock.Move(0, 1);
+        if (IsBlockOutside() || BlockFits() == false)
+        {
+            currentBlock.Move(0, -1);
+        }
     }
 }
 
 void Game::MoveBlockDown()
 {
-    currentBlock.Move(1, 0);
-    if (IsBlockOutside())
+    if (!gameOver)
     {
-        currentBlock.Move(-1, 0);
+        currentBlock.Move(1, 0);
+        if (IsBlockOutside() || BlockFits() == false)
+        {
+            currentBlock.Move(-1, 0);
+            LockBlock();
+        }
     }
 }
