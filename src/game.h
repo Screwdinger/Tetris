@@ -12,16 +12,22 @@ class Game
     void RotateBlock();
     void LockBlock();
     void Reset();
-
-    public:
-    Game();
-    bool gameOver;
-    Block GetRandomBlock();
-    std::vector<Block> GetAllBlocks();
-    void Draw();
-    void HandleInput();
     void MoveBlockLeft();
     void MoveBlockRight();
-    void MoveBlockDown();
+    Block GetRandomBlock();
+    std::vector<Block> GetAllBlocks();
+    void UpdateScore(int LinesCleared, int moveDownPoints);
     Grid grid;
+    Sound rotateSound;
+    Sound clearSound;
+
+public:
+    Game();
+    ~Game();
+    bool gameOver;
+    int score;
+    Music music;
+    void Draw();
+    void HandleInput();
+    void MoveBlockDown();
 };

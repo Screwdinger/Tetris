@@ -14,7 +14,7 @@ class Block
 
 public:
     Block();
-    void Draw();
+    void Draw(int offsetX, int offsetY);
     void Rotate();
     void UndoRotate();
     void Move(int rows, int columns);
